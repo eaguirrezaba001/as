@@ -1,0 +1,17 @@
+Vagrant.configure("2") do |config|
+    ### Specify the base box
+    config.vm.box = "ubuntu/xenial64"
+    ### Setup port forwarding
+#    config.vm.network :forwarded_port, guest: 10080, host: 8931, auto_correct: true
+    config.vm.network :forwarded_port, guest: 8080, host: 8080
+    ### Setup synced folder
+    config.vm.synced_folder "../../../git", "/home/ubuntu/git"
+    ### VM specific configs
+    config.vm.provider "virtualbox" do |v|
+    	v.name = "AS-Vagrant-Docker"
+    	v.customize ["modifyvm", :id, "--memory", "4096"]
+    	v.cpus = 2
+    end
+    ### Shell provisioning
+    config.vm.provision :shell, path: "provision/setup.sh"
+end
