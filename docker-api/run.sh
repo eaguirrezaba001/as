@@ -1,6 +1,7 @@
 #!/bin/bash
 
-git clone https://github.com/lord/slate.git
+# Clone the api documentation source from github
+git clone https://github.com/eaguirrezaba001/slate.git
 cp ./docker-compose.yml ./slate
 cp ./Dockerfile ./slate
 cd ./slate
