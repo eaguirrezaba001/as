@@ -1,0 +1,10 @@
+https://rexray.codedellemc.com/
+https://github.com/codedellemc/labs/tree/master/setup-scaleio-vagrant
+https://sunnynetwork.wordpress.com/2017/02/13/lab-40-container-orchestration-kubernetes/
+https://coreos.com/kubernetes/docs/latest/kubernetes-on-vagrant.html
+https://kubernetes.io/docs/tutorials/kubernetes-basics/
+https://github.com/coreos/coreos-kubernetes/blob/master/multi-node/vagrant/Vagrantfile
+https://crondev.com/kubernetes-installation-kubeadm/
+http://jeremievallee.com/2017/01/31/kubernetes-with-vagrant-ansible-kubeadm/
+https://github.com/fjsanpedro/vagrant-nodemaster
+https://github.com/fjsanpedro/vagrant-node

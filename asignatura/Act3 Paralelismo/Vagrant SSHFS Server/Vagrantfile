@@ -1,0 +1,24 @@
+# SSHFS server in Vagrant VM.
+# vagrant plugin install vagrant-sshfs
+
+Vagrant.configure("2") do |config|
+
+	# Specify the base box
+	config.vm.box = "ubuntu/xenial64"
+
+    # Setup synced folder
+
+     config.vm.synced_folder './srv', '/srv/nfs', type: 'sshfs'
+
+    # VM specific configs
+    config.vm.provider "virtualbox" do |v|
+    	v.name = "Test Vagrant SSHFS Server"
+    	v.customize ["modifyvm", :id, "--memory", "2048"]
+    end
+
+    # Shell provisioning
+#    config.vm.provision "shell" do |s|
+#    	s.path = "provision/setup.sh"
+#    end
+end
+

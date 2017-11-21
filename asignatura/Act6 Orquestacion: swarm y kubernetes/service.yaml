@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: nginx
+    role: web
+    env: prod
+  name: nginxservice
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: nginx
+    role: web
+    env: prod
+  type: NodePort

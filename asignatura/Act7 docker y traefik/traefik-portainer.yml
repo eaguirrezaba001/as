@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  web:
+    image: portainer/portainer
+    restart: always
+    volumes:
+      - $PWD/data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      - 'traefik.backend=portainer'
+      - 'traefik.frontend.rule=Host:portainer.ichasco.com'
+      - 'traefik.docker.network=traefik'
+    networks:
+      - traefik
+
+networks:
+  traefik:
+    external:
+      name: traefik

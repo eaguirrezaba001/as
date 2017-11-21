@@ -1,0 +1,3 @@
+a) Elige un sistema de ficheros de red, distribuido o no, plantea sus ventajas y describe cómo funciona, y haz una presentación.
+
+b) Un grupo preparará un GlusterFS y otro un sistema iSCSI.

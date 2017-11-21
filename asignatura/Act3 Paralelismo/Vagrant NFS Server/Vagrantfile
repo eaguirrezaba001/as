@@ -1,0 +1,26 @@
+# NFS server in Vagrant VM.
+# vagrant plugin install vagrant-nfs_guest
+
+Vagrant.configure("2") do |config|
+
+	# Specify the base box
+	config.vm.box = "ubuntu/xenial64"
+
+	config.vm.network "private_network", type: "dhcp" # Host only network!!!
+
+    # Setup synced folder
+
+     config.vm.synced_folder './srv', '/srv/nfs', type: 'nfs_guest'
+
+    # VM specific configs
+    config.vm.provider "virtualbox" do |v|
+    	v.name = "Test Vagrant NFS Server"
+    	v.customize ["modifyvm", :id, "--memory", "2048"]
+    end
+
+    # Shell provisioning
+#    config.vm.provision "shell" do |s|
+#    	s.path = "provision/setup.sh"
+#    end
+end
+

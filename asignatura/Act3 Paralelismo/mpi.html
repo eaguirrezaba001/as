@@ -1,0 +1,358 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es"><head><title>Instalación y configuración MPICH2, para Cluster Beowulf. versión 0.2 | Ubuntu-es</title>
+
+
+
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css" media="all">@import "/misc/drupal.css";</style><link rel="shortcut icon" href="http://www.ubuntu-es.org/files/favicon.ico" type="image/x-icon">
+  <style type="text/css" media="all">@import "/themes/ubuntu/style.css";</style>  <style type="text/css" media="all">#mastWrapper {
+background: url(./themes/ubuntu/images/header.png) bottom left repeat-x #fff;
+}
+
+#masthead
+{
+position:relative;
+/* background: url(./themes/ubuntu/images/headerlogo.png) no-repeat transparent; */
+background: url(./files/logo.png) no-repeat transparent;
+border-style: solid;
+border-width: 0;
+color: #000;
+height: 90px;
+border-left: 0em;
+}
+
+#masthead h1
+{
+	display: none;		/* we'll show an image instead */
+	text-indent:-10000px;
+	margin:0;
+}
+
+#search 
+{
+position:absolute;
+top:15px;
+right:20px;		  
+}
+
+#nav 
+{
+position:absolute;
+bottom:0px;
+right:10px;
+}
+		  
+#nav ul 
+{
+margin:0;
+padding:10px 10px 0 20px;
+list-style:none;
+}
+		  
+#nav li 
+{
+float:left;
+background:url(./themes/ubuntu/images/tab_off_ns1.png) no-repeat left top;
+margin:0;
+padding:0 0 0 5px;
+}
+
+#nav a 
+{
+float:left;
+font-size:105%;
+display:block;
+background:url(./themes/ubuntu/images/tab_off_ns2.png) no-repeat right top;
+padding:10px 15px 3px 8px;
+text-decoration:none;
+font-weight:bold;
+color:#444;
+}
+
+/* Commented Backslash Hack hides rule from IE5-Mac \*/
+#nav a {float:none;}
+/* End IE5-Mac hack */
+#nav a:hover {
+color:#333;
+}
+
+#nav li:hover, #nav li:hover a 
+{
+background-position:0% -163px;
+color:#000;
+}
+
+#nav li:hover a 
+{
+background-position:100% -163px;
+color:#000;
+}
+
+#nav #current 
+{
+background:url(./themes/ubuntu/images/tab_on_ns1.png) no-repeat left top;		  
+}
+
+#nav #current a 
+{
+background:url(./themes/ubuntu/images/tab_on_ns2.png) no-repeat right top;		  
+padding-bottom:4px;
+color:#000;
+}
+</style>
+
+  <link rel="icon" href="http://www.ubuntu-es.org/files/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="http://www.ubuntu-es.org/files/favicon.ico" type="image/x-icon"><!--
+  <link rel="SHORTCUT ICON" href="/images/favicon.ico" type="image/x-icon" />
+  <link rel="ICON"          href="/images/favicon.ico" type="image/x-icon" />
+  --></head><body>
+
+  <div id="mastWrapper">
+    <div id="masthead">
+
+	<div align="right">
+        <!-- Busqueda con custom Google -->
+        <form action="http://www.google.es/custom" method="get" id="searchform">
+	
+        <input name="cof" value="LW:581;LH:116;L:http://www.ubuntu-es.org/files/logo-google.png;GIMP:#cc0000;T:black;ALC:#0000ff;GFNT:grey;LC
+:#990000;BGC:white;AH:center;VLC:purple;GL:0;GALT:#666633;" type="hidden">
+        <input name="domains" value="www.ubuntu-es.org" type="hidden">
+        <input name="sitesearch" value="www.ubuntu-es.org" type="hidden">
+        <input class="form-text" size="15" value="" name="q" type="text">
+        <!-- <input class="form-submit" type="submit" name=op value="" id="searchsubmit" /> -->
+        <input class="form-submit" name="op" value="Buscar" id="searchsubmit" type="submit">
+        </form>
+	</div>
+
+      <div id="nav">
+
+        <ul>
+	  <li><a href="http://www.ubuntu-es.org/">Inicio</a></li><li><a href="http://www.ubuntu-es.org/index.php?q=ubuntu/introduccion">Sobre Ubuntu</a></li><li><a href="http://www.ubuntu-es.org/index.php?q=comunidad/index">Comunidad</a></li><li><a href="http://www.ubuntu-es.org/index.php?q=forum" title="Los foros">Foros</a></li><li><a href="http://www.ubuntu-es.org/index.php?q=documentacion">Documentación</a></li>        </ul>
+      </div>
+    </div>
+  </div>
+
+  <table id="content" border="0" cellpadding="0" cellspacing="0">
+    <tbody><tr>
+      <td id="sidebar-left">
+          <div class="block block-block" id="block-block-4">
+    <h2 class="title">Gutsy ya está aquí</h2>
+    <div class="content"><p><a href="http://www.ubuntu-es.org/index.php?q=node/66348"> <img src="mpi_files/ubuntu-7.png" alt="Ubuntu 7.10 ya está aquí"> </a></p>
+</div>
+ </div>
+  <div class="block block-user" id="block-user-0">
+    <h2 class="title">Inicio de sesión de usuario</h2>
+    <div class="content"><form action="/index.php?q=node/22884&amp;destination=node%2F22884" method="post" id="user-login-form">
+<div><div class="form-item">
+ <label for="edit-name">Nombre de usuario: <span class="form-required" title="Este campo es obligatorio.">*</span></label>
+ <input maxlength="60" name="edit[name]" id="edit-name" size="15" value="" class="form-text required" type="text">
+</div>
+<div class="form-item">
+ <label for="edit-pass">Contraseña: <span class="form-required" title="Este campo es obligatorio.">*</span></label>
+ <input name="edit[pass]" id="edit-pass" maxlength="60" size="15" class="form-text required" type="password">
+</div>
+<input name="op" value="Iniciar sesión" class="form-submit" type="submit">
+<div class="item-list"><ul><li><a href="http://www.ubuntu-es.org/index.php?q=user/register" title="Crea una cuenta de usuario nueva.">Crear cuenta nueva</a></li><li><a href="http://www.ubuntu-es.org/index.php?q=user/password" title="Solicita una contraseña nueva por correo electrónico.">Solicitar nueva contraseña</a></li></ul></div><input name="edit[form_id]" id="edit-user-login-block" value="user_login_block" type="hidden">
+
+</div></form>
+</div>
+ </div>
+  <div class="block block-user" id="block-user-1">
+    <h2 class="title">Navegación</h2>
+    <div class="content">
+<ul class="menu">
+<li class="leaf"><a href="http://www.ubuntu-es.org/index.php?q=forum">foros</a></li>
+<li class="leaf"><a href="http://www.ubuntu-es.org/index.php?q=Preguntas_Frecuentes">Preguntas Frecuentes</a></li>
+<li class="leaf"><a href="http://www.ubuntu-es.org/index.php?q=forum/normas" title="Nuevas normas para el foro">Normas del foro (¡Actualizadas! 11/10/07)</a></li>
+<li class="leaf"><a href="http://www.ubuntu-es.org/index.php?q=blog/normas" title="Nuevas normas para los blogs">Normas del blog</a></li>
+
+</ul>
+</div>
+ </div>
+  <div class="block block-block" id="block-block-2">
+    <h2 class="title">Seguimiento</h2>
+    <div class="content"><ul>  <li><a href="http://www.ubuntu-es.org/index.php?q=tracker">envíos
+recientes</a></li></ul> </div>
+ </div>
+  <div class="block block-block" id="block-block-3">
+    <h2 class="title">Tira Ecol</h2>
+    <div class="content"><a href="http://www.tiraecol.net/modules/comic/comic.php?content_id=138"><img src="mpi_files/tiraecol-138-130px.png" alt="Tira Ecol "></a><br><a href="http://www.tiraecol.net/">Ver última publicada</a></div>
+ </div>
+  <div class="block block-forum" id="block-forum-1">
+    <h2 class="title">Temas nuevos</h2>
+    <div class="content"><div class="item-list"><ul><li><a href="http://www.ubuntu-es.org/index.php?q=node/68002">Wine y sus accesos directos</a></li><li><a href="http://www.ubuntu-es.org/index.php?q=node/68001">Ubuntu no reconoce ni HD externo ni cámara de fotos (USB)</a></li><li><a href="http://www.ubuntu-es.org/index.php?q=node/68000">Problemas para apagar el ordenador.</a></li><li><a href="http://www.ubuntu-es.org/index.php?q=node/67999">hola! soy nuevo y necesito ayuda con privxy y tor!</a></li><li><a href="http://www.ubuntu-es.org/index.php?q=node/67998">cd con repositorios</a></li></ul></div><div class="more-link"><a href="http://www.ubuntu-es.org/index.php?q=forum" title="Leer los últimos temas del foro.">más</a></div></div>
+ </div>
+  <div class="block block-forum" id="block-forum-0">
+    <h2 class="title">Temas activos</h2>
+    <div class="content"><div class="item-list"><ul><li><a href="http://www.ubuntu-es.org/index.php?q=node/68002">Wine y sus accesos directos</a></li><li><a href="http://www.ubuntu-es.org/index.php?q=node/65698" title="6 comentarios">Problema tras compilar y wifi</a></li><li><a href="http://www.ubuntu-es.org/index.php?q=node/66873" title="1 comentario">Supender portátil en 7.10 ¿ Le funciona a alguien ?</a></li><li><a href="http://www.ubuntu-es.org/index.php?q=node/67995" title="4 comentarios">Una duda que no me deja dormir...</a></li><li><a href="http://www.ubuntu-es.org/index.php?q=node/67658" title="7 comentarios">Gutsy se cuelga</a></li></ul></div><div class="more-link"><a href="http://www.ubuntu-es.org/index.php?q=forum" title="Leer los últimos temas del foro.">más</a></div></div>
+ </div>
+  <div class="block block-poll" id="block-poll-0">
+    <h2 class="title">Encuesta</h2>
+    <div class="content"><div class="poll"><div class="title">Uso Ubuntu porque soy:</div><div class="text">Informático profesional (Sistemas)</div><div class="bar"><div style="width: 11%;" class="foreground"></div></div><div class="percent">11%</div><div class="text">Informático profesional (Gestión)</div><div class="bar"><div style="width: 3%;" class="foreground"></div></div><div class="percent">3%</div><div class="text">Estudiante de informática</div><div class="bar"><div style="width: 20%;" class="foreground"></div></div><div class="percent">20%</div><div class="text">Usuario en el trabajo</div><div class="bar"><div style="width: 3%;" class="foreground"></div></div><div class="percent">3%</div><div class="text">Usuario en casa</div><div class="bar"><div style="width: 32%;" class="foreground"></div></div><div class="percent">32%</div><div class="text">Informático autodidacta</div><div class="bar"><div style="width: 24%;" class="foreground"></div></div><div class="percent">24%</div><div class="text">Hacker</div><div class="bar"><div style="width: 1%;" class="foreground"></div></div><div class="percent">1%</div><div class="text">Friki</div><div class="bar"><div style="width: 7%;" class="foreground"></div></div><div class="percent">7%</div><div class="total">Total de votos: 1736</div></div><div class="links"><a href="http://www.ubuntu-es.org/index.php?q=node/66049#comment" title="Ir al primer comentario de este envío.">63 comentarios</a> | <a href="http://www.ubuntu-es.org/index.php?q=poll" title="Ver la lista con las encuestas del sitio.">encuestas anteriores</a></div></div>
+ </div>
+  <div class="block block-blog" id="block-blog-0">
+    <h2 class="title">Envíos recientes a las bitácoras</h2>
+    <div class="content"><div class="item-list"><ul><li><a href="http://www.ubuntu-es.org/index.php?q=node/67985">Volviiiiiiiiiiiiiii</a></li><li><a href="http://www.ubuntu-es.org/index.php?q=node/67959">ayuda para novatos</a></li><li><a href="http://www.ubuntu-es.org/index.php?q=node/67947"> 8 razones por las que un usuario de Windows no se plantea siquiera usar Linux.</a></li><li><a href="http://www.ubuntu-es.org/index.php?q=node/67923">Un SO para todo y un SO para todos...</a></li><li><a href="http://www.ubuntu-es.org/index.php?q=node/67921">Resumen  Clase 1 Proyecto CUPIE</a></li><li><a href="http://www.ubuntu-es.org/index.php?q=node/67902">Launchpad y Hardy Heron</a></li><li><a href="http://www.ubuntu-es.org/index.php?q=node/67837">de Suse a Ubuntu</a></li><li><a href="http://www.ubuntu-es.org/index.php?q=node/67836">Me voy! Bueno no, me quedo :)</a></li><li><a href="http://www.ubuntu-es.org/index.php?q=node/67815">Problemas de suspensión en laptops</a></li><li><a href="http://www.ubuntu-es.org/index.php?q=node/67756">Ubuntu podría acortar la vida del disco duro de los portátiles.</a></li></ul></div><div class="more-link"><a href="http://www.ubuntu-es.org/index.php?q=blog" title="Lee los últimos envíos de la bitácora.">más</a></div></div>
+ </div>
+  <div class="block block-user" id="block-user-3">
+    <h2 class="title">En línea</h2>
+    <div class="content">En este momento hay 55 usuarios y 459 invitados en línea.<div class="item-list"><h3>Usuarios en línea</h3><ul><li>kernel b00t</li><li>aldinho</li><li>Peluchon</li><li>pucio</li><li>Arafinwë</li></ul></div></div>
+ </div>
+      </td>
+      <td valign="top">
+                <div id="main">
+          <div class="breadcrumb"><a href="http://www.ubuntu-es.org/">Principal</a> » <a href="http://www.ubuntu-es.org/index.php?q=blog">diarios</a> » <a href="http://www.ubuntu-es.org/index.php?q=blog/15298">bitácora de kanibalv</a></div>          <h1 class="title">Instalación y configuración MPICH2, para Cluster Beowulf. versión 0.2</h1>
+          <div class="tabs"></div>
+          <div id="help"></div>
+          
+          <!-- begin content -->  <div class="node">
+    <div class="picture"><img src="mpi_files/picture-15298.jpg" alt="Imagen de kanibalv" title="Imagen de kanibalv"></div>    <h2 class="title"><a href="http://www.ubuntu-es.org/index.php?q=node/22884">Instalación y configuración MPICH2, para Cluster Beowulf. versión 0.2</a></h2>
+    <span class="submitted">Enviado por kanibalv el Mié, 16/08/2006 - 05:39</span>
+    <span class="taxonomy"><a href="http://www.ubuntu-es.org/index.php?q=taxonomy/term/28" rel="tag" title="Como usar las funciones de la web de ubuntu-es">COMOs de esta Web</a></span>
+    <div class="content"><p><b>Instalación y configuración MPICH2, para Cluster Beowulf. versión 0.2</b><br>
+Por kanibalv</p>
+<p>(Supercomputación con su Ubuntu o Kubuntu.)</p>
+<p>Aquí dejo como configure el MPICH2 para un cluster con 2 nodos, los cuales corren Kubuntu Dapper LTS.<br>
+También esta la opción para un solo PC, que describo más abajo.</p>
+<p>Supuestos:<br>
+- Tengo dos PC's pentium III, con sus respectivas tarjetas de red
+conectadas a un switch de 5 bocas, de las cuales una esta al "router"
+adsl k me dio timofonica.<br>
+- El PC master en donde se ejecutara el código tiene por nombre
+"Kubuntu" y el PC que se usara como nodo se llamara "nodo01"
+(usuario@kubuntu y usuario@nodo01).<br>
+- las tarjetas de Red (eth0) de cada una son 192.168.1.2 y 192.168.1.3
+respectivamente. (yo los asigne manualmente en Kcontrol-&gt;Parámetros
+de Red)(al final les dejo el archivo /etc/network/interfaces que uso
+yo)(comprobar con "ifconfig -a").</p>
+<p>- Lo primero es instalar ssh para la comunicación, puede ser rsh
+(sería + rapido) pero no he probado el como, ya me dio harto calor en
+la cabeza de esta forma(jajajaja):</p>
+<p>$ sudo apt-get install ssh</p>
+<p>-luego para que no pida contraseñas (no se si esta parte esta del todo bien, postear una correcta):<br>
+$ssh-keygen -t dsa<br>
+#pregunta en donde guardarla y passwords, yo deje el archivo por defecto y sin passwords.</p>
+<p>-Luego copiarla<br>
+$ssh-copy-id usuarioremoto@nodo01<br>
+$ssh-add</p>
+<p>-Luego lo mismo con la llave rsa<br>
+$ssh-keygen -t rsa<br>
+#pregunta en donde guardarla y passwords, yo deje el archivo por defecto y sin passwords.</p>
+<p>-Luego copiarla<br>
+$ssh-copy-id usuarioremoto@nodo01<br>
+$ssh-add</p>
+<p>(se pueden comunicar con el nodo con <b>ssh nodo01</b>, a mi no me pide password luego de esto, se salen con "exit")<br>
+- ent. instalemos los .deb de MPICH2:<br>
+Ent. en el master y nodo(s) instalar (yo lo hice con el adept):<br>
+$ sudo apt-get install mpich2<br>
+$ sudo apt-get install mpich2-mpd<br>
+$ sudo apt-get install mpich2-mpe<br>
+$ sudo apt-get install libmpich2-1.0<br>
+$ sudo apt-get install libmpich2-1.0-dev</p>
+<p>Si no están, el repositorio es (agregar en /etc/apt/sources.list) (grande Zach):</p>
+<p>#MPICH2.deb Packages<br>
+deb <a href="http://torvalds.cs.mtsu.edu/%7Ezach/debian/current/" title="http://torvalds.cs.mtsu.edu/~zach/debian/current/">http://torvalds.cs.mtsu.edu/~zach/debian/current/</a> /</p>
+<p>-Luego hay que editar <b>/etc/hosts</b> en todos los PC's conteniendo este tipo de configuración, (no funca con otra):<br>
+$sudo vim /etc/hosts<br>
+#tiene que verse asi<br>
+127.0.0.1 localhost localhost.localdomain<br>
+192.168.1.2 ubuntu master<br>
+192.168.1.3 nodo01<br>
+#luego tiene lo de las IPv6 y demases por defecto</p>
+<p>-Luego crear o editar un archivo <b>.mpd.conf</b> en /home/"ususario" (va con el punto al inicio) en todos los PC's que contenga la linea:</p>
+<p>MPD_SECRETWORD="secret"</p>
+<p>#la palabra "secret" es a tu elección pero en todos la misma (sin comillas)</p>
+<p>-Luego en el master crear un archivo llamado <b>.mpd.hosts</b> con:<br>
+#<br>
+ubuntu<br>
+nodo01<br>
+#<br>
+(igual lo tenia en el nodo)</p>
+<p>-Repetir los pasos en todos los PC's, yo lo hice sólo con 2.</p>
+<p>-Entonces podemos hacer correr el demonio MPD en el cluster<br>
+Para un solo PC (el master) es:<br>
+usuario@kubuntu:~$mpdboot<br>
+#Los programas funcionan de la misma forma un uno o 10 nodos, lo que importa son el numero de procesos.</p>
+<p>Para 2 o más PC's es:<br>
+usuario@kubuntu:~$mpdboot -n 2 -f .mpd.hosts<br>
+#el 2 es porque tengo solo 2 PC's, puede ser cualquier numero menor al numero de PC's en .mpd.hots</p>
+<p>-Para probar se ejecuta <b>mpdtrace</b> y debe arrojar el nombre de los PC's, ejemplo:<br>
+usuario@kubuntu:~$mpdtrace<br>
+kubuntu<br>
+nodo01<br>
+- si les salio ese mensaje significa que el demonio esta corriendo en el master y el nodo.<br>
+-Otra forma de probarlo es ejecutar<b> hostname</b> en los PC's<br>
+usuario@kubuntu:~$mpiexec -n 2 hostname<br>
+kubuntu<br>
+nodo01<br>
+-o tambien:<br>
+usuario@kubuntu:~$mpiexec -l -n 3 hostname<br>
+1: nodo2<br>
+0: kubuntu<br>
+2: kubuntu<br>
+#la opcion -l es para mostrar el rank de cada proceso.</p>
+<p>- probar el ejemplo, cpi (calculo de pi en paralelo):<br>
+usuario@kubuntu:~$mpiexec -l -n 5 /usr/share/mpich2/examples/cpi<br>
+0: Process 0 of 5 is on kubuntu<br>
+1: Process 1 of 5 is on nodo2<br>
+3: Process 3 of 5 is on nodo2<br>
+2: Process 2 of 5 is on kubuntu<br>
+4: Process 4 of 5 is on kubuntu<br>
+0: pi is approximately 3.1415926544231230, Error is 0.0000000008333298<br>
+0: wall clock time = 0.026098</p>
+<p>Si les ha servido posteen por favor, dado que he perdido una
+enormidad de tiempo para llegar a esto dado que un tutorial para ubuntu
+no existe. Seria bueno que alguien k tenga más de 2 PC's diga como le
+funciona...</p>
+<p>-o-</p>
+<p>Nota: mi archivo /etc/network/interfaces (con mi conf de ADSL):</p>
+<p># This file describes the network interfaces available on your system<br>
+# and how to activate them. For more information, see interfaces(5).</p>
+<p># The loopback network interface<br>
+auto lo<br>
+iface lo inet loopback<br>
+address 127.0.0.1<br>
+netmask 255.0.0.0</p>
+<p># The primary network interface<br>
+#cambiado por mi<br>
+#auto eth0<br>
+#iface eth0 inet dhcp</p>
+<p>auto dsl-provider<br>
+iface dsl-provider inet ppp<br>
+   provider dsl-provider</p>
+<p>    pre-up /sbin/ifconfig eth0 up # line maintained by pppoeconf</p>
+<p># added by pppoeconf<br>
+auto eth0<br>
+  iface eth0 inet static<br>
+   address 192.168.1.2<br>
+   netmask 255.255.255.0<br>
+   gateway 192.168.1.1</p>
+<p>-o-</p>
+</div>
+    <div class="links">» <a href="http://www.ubuntu-es.org/index.php?q=blog/15298" title="Leer lo más reciente de la bitácora de kanibalv.">bitácora de kanibalv</a></div>
+  </div>
+<a id="comment"></a>
+<!-- end content -->        </div>
+      </td>
+          </tr>
+  </tbody></table>
+
+  <div id="footer">
+    <p>
+<a href="http://www.ubuntu-es.org/"><img src="mpi_files/ubuntu-es.png" alt="Ubuntu-es"></a>&nbsp;
+<a href="http://www.aditel.org/"><img src="mpi_files/aditel.png" alt="ADITEL"></a>&nbsp;
+<a href="http://www.drupal.org/"><img src="mpi_files/drupal.png" alt="Powered by Drupal"></a>&nbsp;
+<a href="http://www.0x50.org/"><img src="mpi_files/cherokee.png" alt="Powered by Cherokee"></a>
+<a href="http://www.ubuntu-es.org/licencia"><img alt="Creative Commons License" src="mpi_files/80x15.png"></a>
+</p>
+  </div>
+  
+  <script src="mpi_files/urchin.js" type="text/javascript">
+  </script>
+  <script type="text/javascript">
+  _uacct = "UA-205839-2";
+  urchinTracker();
+  </script>
+
+</body></html>
