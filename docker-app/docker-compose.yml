@@ -1,0 +1,31 @@
+app1:
+   volumes:
+    - $PWD/tomcat/app1-webapps:/usr/local/tomcat/webapps
+   expose:
+    - "8009"
+   image: mg:tomcat
+   container_name: "app1"
+app2:
+   volumes:
+    - $PWD/tomcat/app2-webapps:/usr/local/tomcat/webapps
+   expose:
+    - "8009"
+   image: mg:tomcat
+   container_name: "app2"
+app3:
+   volumes:
+    - $PWD/tomcat/app3-webapps:/usr/local/tomcat/webapps
+   expose:
+    - "8009"
+   image: mg:tomcat
+   container_name: "app3"
+http:
+   volumes:
+    - $PWD/httpd/conf/jk_mod/jk.conf:/etc/apache2/mods-available/jk.conf
+    - $PWD/logs:/var/log/apache2
+    - $PWD/httpd/conf/jk_mod/workers.properties:/etc/libapache2-mod-jk/workers.properties
+    - $PWD/httpd/conf/apache2/000-default.conf:/etc/apache2/sites-available/000-default.conf
+   ports:
+     - "80:80"
+   image: mg:httpd
+   container_name: "http-proxy"
