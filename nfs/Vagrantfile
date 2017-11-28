@@ -1,0 +1,32 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/trusty64"
+  # SERVER
+  config.vm.define vm_name = "nfs-server" do |config|
+    config.cache.scope = :box
+    config.vm.hostname = vm_name
+    ip = "172.21.12.20"
+    config.vm.network :private_network, ip: ip
+    config.vm.provision :shell, :inline => "DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -yq nfs-kernel-server nfs-common portmap", :privileged => true
+    config.vm.provision :shell, :inline => "DEBIAN_FRONTEND=noninteractive mkdir /var/nfs && chown nobody:nogroup /var/nfs", :privileged => true
+    config.vm.provision :shell, :inline => "DEBIAN_FRONTEND=noninteractive echo '/var/nfs 172.21.12.21(rw,sync,no_subtree_check)' >> /etc/exports", :privileged => true
+    config.vm.provision :shell, :inline => "DEBIAN_FRONTEND=noninteractive exportfs -a && service nfs-kernel-server start", :privileged => true
+# Shell provisioning
+#    config.vm.provision "shell" do |s|
+#    	s.path = "provision/setup-nf-server.sh"
+  end
+  # CLIENT
+  config.vm.define vm_name = "nfs-client" do |config|
+    config.cache.scope = :box
+    config.vm.hostname = vm_name
+    ip = "172.21.12.21"
+    config.vm.network :private_network, ip: ip
+    config.vm.provision :shell, :inline => "DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -yq nfs-common portmap", :privileged => true
+    config.vm.provision :shell, :inline => "DEBIAN_FRONTEND=noninteractive mkdir /mnt/nfs/ && mount 172.21.12.20:/var/nfs /mnt/nfs/", :privileged => true
+# Shell provisioning
+#    config.vm.provision "shell" do |s|
+#    	s.path = "provision/setup-nf-client.sh"
+  end
+end
