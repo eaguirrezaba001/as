@@ -9,18 +9,22 @@ BOX_CPU_COUNT = "4"
 Vagrant.configure(2) do |config|
   config.vm.box = "ubuntu/xenial64"
   config.vm.box_check_update = false
+
+  config.vm.provision :shell, :path => "install.sh"
+#  config.vm.provision "shell", inline: "sudo apt-get update"
+#  config.vm.provision "shell", inline: "sudo apt-get install -y docker.io"
+
   config.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", BOX_RAM_MB]
     vb.customize ["modifyvm", :id, "--cpus", BOX_CPU_COUNT]
   end
 
-#  config.vm.provision :shell, :path => "install.sh"
-  config.vm.provision "shell", inline: "sudo apt-get update"
-  config.vm.provision "shell", inline: "sudo apt-get install -y docker.io"
-
   config.vm.define "k8s" do |c|
       c.vm.hostname = "k8s"
       c.vm.network "private_network", ip: "192.168.99.100"
+      c.vm.network "forwarded_port", guest: 8001, host: 8001
+      c.vm.network "forwarded_port", guest: 30413, host: 30413
+
   end
 
 end

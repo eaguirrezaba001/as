@@ -4,7 +4,9 @@ De esta manera, se pretenden lograr varios objetivos como que estas máquinas se
 
 2. Herramientas
 - virtualbox
-- Kubernetes (minikube)
+- vagrant
+- docker
+- Kubernetes
 - traeffik
 - vagrant landrush
 
