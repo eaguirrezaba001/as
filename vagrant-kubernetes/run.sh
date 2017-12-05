@@ -4,7 +4,7 @@ export KUBERNETES_PROVIDER=vagrant
 export NUM_NODES=1
 export VAGRANT_NO_PROXY=127.0.0.1
 
-cd /tmp
+mkdir -p $HOME/vagrant
 curl -sS https://get.k8s.io | bash
 cd kubernetes
 ./cluster/kube-up.sh

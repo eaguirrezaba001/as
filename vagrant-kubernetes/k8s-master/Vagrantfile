@@ -1,0 +1,30 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/xenial64"
+  config.vm.box_check_update = false
+
+  config.vm.provision :shell, :path => "install.sh"
+
+  config.hostmanager.enabled = true
+  config.hostmanager.manage_guest = true
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.cpus = 4
+    vb.memory = "4096"
+  end
+
+  config.vm.define "master" do |c|
+      c.vm.hostname = "master"
+      c.vm.network "private_network", ip: "192.168.77.10"
+      c.vm.network "forwarded_port", guest: 8001, host: 8001
+      c.vm.network "forwarded_port", guest: 2379, host: 2379
+      c.vm.network "forwarded_port", guest: 2380, host: 2380
+      c.vm.network "forwarded_port", guest: 10250, host: 10250
+      c.vm.network "forwarded_port", guest: 10251, host: 10251
+      c.vm.network "forwarded_port", guest: 10252, host: 10252
+      c.vm.network "forwarded_port", guest: 10255, host: 10255
+  end
+end
+
