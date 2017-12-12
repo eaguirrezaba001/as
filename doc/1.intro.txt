@@ -1,0 +1,14 @@
+1. Objetivo
+-----------
+El proyecto que se pretende llevar a cabo trata de implementar un sistema de máquinas (virtuales o no) gestionadas por el software de orquestación Kubernetes (k8s).
+De esta manera, se pretenden lograr varios objetivos como que estas máquinas sean accesibles a través de diferentes nombres de dominio o que la carga de trabajo quede distribuida entre ellas a traves del balanceador de carga.
+
+2. Herramientas
+---------------
+- virtualbox
+- vagrant
+- docker
+- Kubernetes
+- traefik
+- vagrant landrush
+
