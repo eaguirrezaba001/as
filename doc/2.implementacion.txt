@@ -29,6 +29,13 @@ Iteracion 7, activar vagrant-landrush,
 - Guia: https://github.com/vagrant-landrush/landrush
 - Resultado: activado pero funcionamiento incorrecto junto con traefik
 
+*** WORKAROUND:
+=====================================
+https://www.google.es/search?dcr=0&ei=evsvWoevIoyxaqetnYgP&q=vagrant+landrush+%22no+such+host%22&oq=vagrant+landrush+%22no+such+host%22&gs_l=psy-ab.3...1882.12457.0.12650.15.14.0.1.1.0.117.1270.4j8.12.0....0...1c.1.64.psy-ab..2.7.668...0i203k1j0i22i30k1j33i22i29i30k1j33i21k1.0.ZaK2TPtfhYg
+=====================================
+https://github.com/vagrant-landrush/landrush/issues/293
+=====================================
+
 ** Se ha empaquetado una box con la maquina virtual preparada con lo necesario:
 https://app.vagrantup.com/eaguirrezaba001/boxes/as
 
