@@ -2,33 +2,29 @@
 # vi: set ft=ruby :
 
 $USER_NAME = 'as'
-$CPU_COUNT = 4
-$RAM_COUNT = "4096"
 
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/xenial64"
   config.vm.box_check_update = false
   config.vm.provider "virtualbox" do |vb|
     vb.gui = true
-    vb.cpus = $CPU_COUNT
-    vb.memory = $RAM_COUNT
+    vb.cpus = 4
+    vb.memory = "4096"
   end
 
   config.vm.provision "shell", inline: "sudo apt-get update"
   config.vm.provision :shell, :path => "setup.sh", :args => [$USER_NAME]
 
   config.landrush.enabled = true
-#  config.landrush.guest_redirect_dns = false
-#  config.landrush.host_redirect_dns = false
-  config.landrush.tld = 'minikube'
-  config.vm.define "uk8s" do |c|
-      c.vm.hostname = "uk8s.vagrant.test"
-      c.vm.network "private_network", ip: "192.168.111.100"
+  config.vm.define vm_name = "minikube" do |c|
+      c.vm.hostname = vm_name
+      config.landrush.tld = vm_name
+      c.vm.network "private_network", ip: "192.168.99.100"
       c.vm.network "forwarded_port", guest: 30000, host: 30000
   end
-  config.landrush.host 'stilton.minikube', '192.168.111.100'
-  config.landrush.host 'cheddar.minikube', '192.168.111.100'
-  config.landrush.host 'wensleydale.minikube', '192.168.111.100'
-  config.landrush.host 'traefik-ui.minikube', '192.168.111.100'
+#  config.landrush.host 'stilton.minikube', '192.168.99.100'
+#  config.landrush.host 'cheddar.minikube', '192.168.99.100'
+#  config.landrush.host 'wensleydale.minikube', '192.168.99.100'
+#  config.landrush.host 'traefik-ui.minikube', '192.168.99.100'
 end
 
