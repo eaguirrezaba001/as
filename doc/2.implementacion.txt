@@ -27,7 +27,7 @@ Iteracion 6, instalar traefik como deployment de kubernetes:
 
 Iteracion 7, activar vagrant-landrush, 
 - Guia: https://github.com/vagrant-landrush/landrush
-- Resultado: activado pero funcionamiento incorrecto junto con traefik
+- Resultado: activado pero funcionamiento incorrecto junto con el contenedor docker de traefik 
 
 *** WORKAROUND:
 =====================================
@@ -36,12 +36,22 @@ https://www.google.es/search?dcr=0&ei=evsvWoevIoyxaqetnYgP&q=vagrant+landrush+%2
 https://github.com/vagrant-landrush/landrush/issues/293
 =====================================
 
+ERROR LANDRUSH & DOCKER(TRAEFIK), WORKAROUND: https://github.com/vagrant-landrush/landrush/issues/293
+# Workaround for docker networking issues + landrush.                                                        
+echo "$(host -t A index.docker.io | grep has.address | head -1 | awk '{print $NF}') index.docker.io" >> /etc/hosts
+echo "$(host -t A registry-1.docker.io | grep has.address | head -1 | awk '{print $NF}') registry-1.docker.io" >> /etc/hosts
+
+ERROR LANDRUSH & RED PRIVADA, WORKAROUND:
+Sobre el box ubuntu/xenial64 se puede reproducir el error tan solo con definir una red privada, 
+utilizando una version anterior como ubuntu/trusty se evita el error
+
+# WORKAROUND for private network error
+# https://bugs.launchpad.net/ubuntu/+source/ubuntu-fan/+bug/1729608
+sudo mv /etc/network/fan /etc/network/fan.backup
+
+
 ** Se ha empaquetado una box con la maquina virtual preparada con lo necesario:
 https://app.vagrantup.com/eaguirrezaba001/boxes/as
-
-
-
-
 
 
 
