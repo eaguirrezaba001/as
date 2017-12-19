@@ -16,15 +16,13 @@ Vagrant.configure("2") do |config|
   config.vm.provision :shell, :path => "setup.sh", :args => [$USER_NAME]
 
   config.landrush.enabled = true
-  config.vm.define vm_name = "minikube" do |c|
+  config.vm.define vm_name = "asvm" do |c|
       c.vm.hostname = vm_name
       config.landrush.tld = vm_name
       c.vm.network "private_network", ip: "192.168.99.100"
       c.vm.network "forwarded_port", guest: 30000, host: 30000
   end
-#  config.landrush.host 'stilton.minikube', '192.168.99.100'
-#  config.landrush.host 'cheddar.minikube', '192.168.99.100'
-#  config.landrush.host 'wensleydale.minikube', '192.168.99.100'
-#  config.landrush.host 'traefik-ui.minikube', '192.168.99.100'
+  config.landrush.host 'minikube', '192.168.99.100'
+
 end
 
